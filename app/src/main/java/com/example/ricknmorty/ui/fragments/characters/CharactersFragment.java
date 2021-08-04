@@ -28,7 +28,6 @@ public class CharactersFragment extends BaseFragment<FragmentCharactersBinding, 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentCharactersBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }

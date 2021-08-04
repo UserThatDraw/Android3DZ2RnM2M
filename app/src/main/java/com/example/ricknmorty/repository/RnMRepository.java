@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.ricknmorty.App;
 import com.example.ricknmorty.models.RnMCharacters;
+import com.example.ricknmorty.models.RnMEpisodes;
+import com.example.ricknmorty.models.RnMLocations;
 import com.example.ricknmorty.models.RnMRespons;
 
 import retrofit2.Call;
@@ -26,8 +28,38 @@ public class RnMRepository {
             }
         });
         return data;
+    }
 
+    public MutableLiveData<RnMRespons<RnMLocations>> fetchLocation() {
+        MutableLiveData<RnMRespons<RnMLocations>> data = new MutableLiveData<>();
+        App.rnMServies.fetchLocations().enqueue(new Callback<RnMRespons<RnMLocations>>() {
+            @Override
+            public void onResponse(Call<RnMRespons<RnMLocations>> call, Response<RnMRespons<RnMLocations>> response) {
+                data.setValue(response.body());
+            }
 
+            @Override
+            public void onFailure(Call<RnMRespons<RnMLocations>> call, Throwable t) {
+
+            }
+        });
+        return data;
+    }
+
+    public MutableLiveData<RnMRespons<RnMEpisodes>> fetchEpisode() {
+        MutableLiveData<RnMRespons<RnMEpisodes>> data = new MutableLiveData<>();
+        App.rnMServies.fetchEpisode().enqueue(new Callback<RnMRespons<RnMEpisodes>>() {
+            @Override
+            public void onResponse(Call<RnMRespons<RnMEpisodes>> call, Response<RnMRespons<RnMEpisodes>> response) {
+                data.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<RnMRespons<RnMEpisodes>> call, Throwable t) {
+
+            }
+        });
+        return data;
     }
 
     public MutableLiveData<RnMCharacters> addDescription(int id) {

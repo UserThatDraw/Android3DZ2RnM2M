@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/charactersFragment"
         android:name="com.example.ricknmorty.ui.fragments.characters.CharactersFragment"
-        android:label="fragment_characters"
+        android:label="Characters"
         tools:layout="@layout/fragment_characters" >
         <action
             android:id="@+id/action_charactersFragment_to_descriptionsFragment"
@@ -17,10 +17,20 @@
     <fragment
         android:id="@+id/descriptionsFragment"
         android:name="com.example.ricknmorty.ui.fragments.descriptions.DescriptionsFragment"
-        android:label="fragment_descriptions"
+        android:label="Description"
         tools:layout="@layout/fragment_descriptions" >
         <argument
             android:name="character_id"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/episodesFragment"
+        android:name="com.example.ricknmorty.ui.fragments.episodes.EpisodesFragment"
+        android:label="Episodes"
+        tools:layout="@layout/fragment_episodes" />
+    <fragment
+        android:id="@+id/locationsFragment"
+        android:name="com.example.ricknmorty.ui.fragments.locations.LocationsFragment"
+        android:label="Location"
+        tools:layout="@layout/fragment_locations" />
 </navigation>
