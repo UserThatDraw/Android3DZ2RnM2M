@@ -8,10 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.ricknmorty.OnClick;
+import com.example.ricknmorty.interfaces.OnClick;
 import com.example.ricknmorty.databinding.ItemCharacterBinding;
 import com.example.ricknmorty.models.RnMCharacters;
-import com.example.ricknmorty.ui.fragments.characters.CharacterViewModel;
 
 import org.jetbrains.annotations.NotNull;
 

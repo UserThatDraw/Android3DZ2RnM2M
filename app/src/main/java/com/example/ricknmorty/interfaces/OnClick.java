@@ -1,4 +1,4 @@
-package com.example.ricknmorty;
+package com.example.ricknmorty.interfaces;
 
 
 import android.view.View;

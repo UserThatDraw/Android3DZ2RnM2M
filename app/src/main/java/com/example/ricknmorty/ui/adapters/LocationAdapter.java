@@ -8,12 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.ricknmorty.OnClick;
-import com.example.ricknmorty.databinding.ItemCharacterBinding;
 import com.example.ricknmorty.databinding.ItemLocationBinding;
-import com.example.ricknmorty.models.RnMCharacters;
-import com.example.ricknmorty.models.RnMEpisodes;
 import com.example.ricknmorty.models.RnMLocations;
 
 import org.jetbrains.annotations.NotNull;

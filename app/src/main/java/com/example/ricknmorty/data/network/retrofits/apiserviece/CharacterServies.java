@@ -10,16 +10,10 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface RnMServies {
+public interface CharacterServies {
 
     @GET("api/character")
     Call<RnMRespons<RnMCharacters>> fetchCharacters();
-
-    @GET("api/location")
-    Call<RnMRespons<RnMLocations>> fetchLocations();
-
-    @GET("api/episode")
-    Call<RnMRespons<RnMEpisodes>> fetchEpisode();
 
     @GET("api/character/{id}")
     Call<RnMCharacters> fetchCharacter(

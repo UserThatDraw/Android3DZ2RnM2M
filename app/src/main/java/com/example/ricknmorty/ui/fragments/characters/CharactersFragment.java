@@ -2,19 +2,16 @@ package com.example.ricknmorty.ui.fragments.characters;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ricknmorty.OnClick;
-import com.example.ricknmorty.R;
+import com.example.ricknmorty.interfaces.OnClick;
 import com.example.ricknmorty.base.BaseFragment;
 import com.example.ricknmorty.databinding.FragmentCharactersBinding;
 import com.example.ricknmorty.models.RnMCharacters;
