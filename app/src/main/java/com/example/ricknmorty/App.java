@@ -9,6 +9,7 @@ import com.example.ricknmorty.data.network.retrofits.apiserviece.CharacterServie
 
 public class App extends Application {
 
+    protected static RetrofitClient retrofitClient = new RetrofitClient();
     public static CharacterServies characterServies;
     public static LocationServies locationServies;
     public static EpisodeServies episodeServies;
@@ -17,8 +18,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        characterServies = new RetrofitClient().provideCharacterApiService();
-        locationServies = new RetrofitClient().provideLocationApiService();
-        episodeServies = new RetrofitClient().provideEpisodeApiService();
+        characterServies = retrofitClient.provideCharacterApiService();
+        locationServies = retrofitClient.provideLocationApiService();
+        episodeServies = retrofitClient.provideEpisodeApiService();
     }
 }
