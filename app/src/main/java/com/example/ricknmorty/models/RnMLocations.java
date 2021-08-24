@@ -1,8 +1,14 @@
 package com.example.ricknmorty.models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class RnMLocations {
+
+    @PrimaryKey
     @SerializedName("id")
     public int id;
 

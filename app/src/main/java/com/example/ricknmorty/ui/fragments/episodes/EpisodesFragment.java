@@ -1,5 +1,8 @@
 package com.example.ricknmorty.ui.fragments.episodes;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,12 +18,15 @@ import com.example.ricknmorty.R;
 import com.example.ricknmorty.base.BaseFragment;
 import com.example.ricknmorty.databinding.FragmentCharactersBinding;
 import com.example.ricknmorty.databinding.FragmentEpisodesBinding;
+import com.example.ricknmorty.models.RnMCharacters;
 import com.example.ricknmorty.models.RnMEpisodes;
 import com.example.ricknmorty.models.RnMLocations;
 import com.example.ricknmorty.models.RnMRespons;
 import com.example.ricknmorty.ui.adapters.CharacterAdapter;
 import com.example.ricknmorty.ui.adapters.EpisodeAdapter;
 import com.example.ricknmorty.ui.fragments.locations.LocationViewModel;
+
+import java.util.List;
 
 public class EpisodesFragment extends BaseFragment<FragmentEpisodesBinding, EpisodeViewModel> {
 
@@ -49,12 +55,20 @@ public class EpisodesFragment extends BaseFragment<FragmentEpisodesBinding, Epis
     @Override
     protected void setupRequests() {
         super.setupRequests();
-        viewModel.getEpi().observe(getViewLifecycleOwner(), new Observer<RnMRespons<RnMEpisodes>>() {
-            @Override
-            public void onChanged(RnMRespons<RnMEpisodes> rnMEpisodesRnMRespons) {
-                adapter.setIn(rnMEpisodesRnMRespons.getResults());
-            }
-        });
+        ConnectivityManager cm =
+                (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()){
+            viewModel.getEpi().observe(getViewLifecycleOwner(), new Observer<RnMRespons<RnMEpisodes>>() {
+                @Override
+                public void onChanged(RnMRespons<RnMEpisodes> rnMEpisodesRnMRespons) {
+                    adapter.setIn(rnMEpisodesRnMRespons.getResults());
+                }
+            });
+        }else {
+            List<RnMEpisodes> list = viewModel.getEpisode();
+            adapter.setIn(list);
+        }
     }
 
     @Override

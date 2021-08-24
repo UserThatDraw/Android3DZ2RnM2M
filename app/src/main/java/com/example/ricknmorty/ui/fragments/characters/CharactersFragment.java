@@ -77,10 +77,10 @@ public class CharactersFragment extends BaseFragment<FragmentCharactersBinding, 
                 }
             });
         }else {
+            Toast.makeText(getContext(), "Loaded from cash", Toast.LENGTH_SHORT).show();
             List<RnMCharacters> list = viewModel.getCharacters();
             adapter.setIn(list);
         }
-
     }
 
     @Override

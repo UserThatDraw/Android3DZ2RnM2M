@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 @Entity
 public class RnMCharacters {
+
     @PrimaryKey
     @SerializedName("id")
     public int id;
