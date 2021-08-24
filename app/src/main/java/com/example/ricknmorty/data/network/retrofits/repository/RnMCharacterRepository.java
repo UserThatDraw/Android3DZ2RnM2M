@@ -12,50 +12,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RnMRepository {
+public class RnMCharacterRepository {
 
     public MutableLiveData<RnMRespons<RnMCharacters>> fetchCharacters() {
         MutableLiveData<RnMRespons<RnMCharacters>> data = new MutableLiveData<>();
         App.characterServies.fetchCharacters().enqueue(new Callback<RnMRespons<RnMCharacters>>() {
             @Override
             public void onResponse(Call<RnMRespons<RnMCharacters>> call, Response<RnMRespons<RnMCharacters>> response) {
+                App.characterDao.insertAll(response.body().getResults());
                 data.setValue(response.body());
             }
 
             @Override
             public void onFailure(Call<RnMRespons<RnMCharacters>> call, Throwable t) {
-
-            }
-        });
-        return data;
-    }
-
-    public MutableLiveData<RnMRespons<RnMLocations>> fetchLocation() {
-        MutableLiveData<RnMRespons<RnMLocations>> data = new MutableLiveData<>();
-        App.locationServies.fetchLocations().enqueue(new Callback<RnMRespons<RnMLocations>>() {
-            @Override
-            public void onResponse(Call<RnMRespons<RnMLocations>> call, Response<RnMRespons<RnMLocations>> response) {
-                data.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<RnMRespons<RnMLocations>> call, Throwable t) {
-
-            }
-        });
-        return data;
-    }
-
-    public MutableLiveData<RnMRespons<RnMEpisodes>> fetchEpisode() {
-        MutableLiveData<RnMRespons<RnMEpisodes>> data = new MutableLiveData<>();
-        App.episodeServies.fetchEpisode().enqueue(new Callback<RnMRespons<RnMEpisodes>>() {
-            @Override
-            public void onResponse(Call<RnMRespons<RnMEpisodes>> call, Response<RnMRespons<RnMEpisodes>> response) {
-                data.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<RnMRespons<RnMEpisodes>> call, Throwable t) {
 
             }
         });

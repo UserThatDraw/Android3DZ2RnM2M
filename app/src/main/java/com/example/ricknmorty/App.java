@@ -25,6 +25,6 @@ public class App extends Application {
         locationServies = retrofitClient.provideLocationApiService();
         episodeServies = retrofitClient.provideEpisodeApiService();
         RoomClient roomClient = new RoomClient();
-        //characterDao = roomClient.
+        characterDao = roomClient.provideCharacterDao(roomClient.provideDatabase(this));
     }
 }

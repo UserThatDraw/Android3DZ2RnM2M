@@ -7,13 +7,14 @@ import androidx.room.Query;
 
 import com.example.ricknmorty.models.RnMCharacters;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
 public interface CharacterDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(RnMCharacters rnmcharacters);
+    void insertAll(ArrayList<RnMCharacters> rnmcharacters);
 
     @Query("SELECT * FROM rnmcharacters")
     List<RnMCharacters> getAll();
