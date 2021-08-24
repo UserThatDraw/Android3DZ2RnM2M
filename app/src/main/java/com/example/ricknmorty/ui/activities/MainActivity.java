@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     private NavController navController;
     AppBarConfiguration appBarConfiguration;
-    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
