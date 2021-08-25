@@ -12,10 +12,11 @@ import java.util.List;
 
 public class CharacterViewModel extends ViewModel {
 
+    public int charactersPage = 1;
     RnMCharacterRepository repository = new RnMCharacterRepository();
 
     public MutableLiveData<RnMRespons<RnMCharacters>> getChar(){
-        return repository.fetchCharacters();
+        return repository.fetchCharacters(charactersPage);
     }
 
     List<RnMCharacters> getCharacters(){

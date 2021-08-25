@@ -5,9 +5,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,7 @@ import java.util.List;
 public class LocationsFragment extends BaseFragment<FragmentLocationsBinding, LocationViewModel> {
 
     LocationAdapter adapter = new LocationAdapter();
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,9 +44,13 @@ public class LocationsFragment extends BaseFragment<FragmentLocationsBinding, Lo
     }
 
     private void setupRecyclerView() {
-        binding.rvLock.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvLock.setLayoutManager(linearLayoutManager);
         binding.rvLock.setAdapter(adapter);
     }
+
+    private int visibleItemCount;
+    private int totalItemCount;
+    private int pastVisibleItem;
 
     @Override
     protected void setupRequests() {
@@ -62,6 +69,23 @@ public class LocationsFragment extends BaseFragment<FragmentLocationsBinding, Lo
             List<RnMLocations> list = viewModel.getLocation();
             adapter.setIn(list);
         }
+
+        binding.rvLock.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0){
+                    visibleItemCount = linearLayoutManager.getChildCount();
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    pastVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+                    if ((visibleItemCount + pastVisibleItem) >= totalItemCount){
+                        viewModel.locationPage++;
+                        viewModel.getLock().observe(getViewLifecycleOwner(), rnMLocationsRnMRespons ->
+                                adapter.setIn(rnMLocationsRnMRespons.getResults()));
+                    }
+                }
+            }
+        });
     }
 
     @Override

@@ -6,10 +6,12 @@ import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +31,7 @@ import java.util.List;
 public class CharactersFragment extends BaseFragment<FragmentCharactersBinding, CharacterViewModel> {
 
     CharacterAdapter adapter = new CharacterAdapter();
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +47,7 @@ public class CharactersFragment extends BaseFragment<FragmentCharactersBinding, 
     }
 
     private void setupRecyclerView() {
-        binding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rv.setLayoutManager(linearLayoutManager);
         binding.rv.setAdapter(adapter);
     }
 
@@ -62,6 +65,10 @@ public class CharactersFragment extends BaseFragment<FragmentCharactersBinding, 
             }
         });
     }
+
+    private int visibleItemCount;
+    private int totalItemCount;
+    private int pastVisibleItem;
 
     @Override
     protected void setupRequests() {
@@ -81,6 +88,23 @@ public class CharactersFragment extends BaseFragment<FragmentCharactersBinding, 
             List<RnMCharacters> list = viewModel.getCharacters();
             adapter.setIn(list);
         }
+
+        binding.rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0){
+                    visibleItemCount = linearLayoutManager.getChildCount();
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    pastVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+                    if ((visibleItemCount + pastVisibleItem) >= totalItemCount){
+                        viewModel.charactersPage++;
+                        viewModel.getChar().observe(getViewLifecycleOwner(), rnMCharactersRnMRespons ->
+                                adapter.setIn(rnMCharactersRnMRespons.getResults()));
+                    }
+                }
+            }
+        });
     }
 
     @Override

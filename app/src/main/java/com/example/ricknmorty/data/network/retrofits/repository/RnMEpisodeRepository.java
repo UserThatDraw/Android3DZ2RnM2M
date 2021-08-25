@@ -12,9 +12,9 @@ import retrofit2.Response;
 
 public class RnMEpisodeRepository {
 
-    public MutableLiveData<RnMRespons<RnMEpisodes>> fetchEpisode() {
+    public MutableLiveData<RnMRespons<RnMEpisodes>> fetchEpisode(int episodePage) {
         MutableLiveData<RnMRespons<RnMEpisodes>> data = new MutableLiveData<>();
-        App.episodeServies.fetchEpisode().enqueue(new Callback<RnMRespons<RnMEpisodes>>() {
+        App.episodeServies.fetchEpisode(episodePage).enqueue(new Callback<RnMRespons<RnMEpisodes>>() {
             @Override
             public void onResponse(Call<RnMRespons<RnMEpisodes>> call, Response<RnMRespons<RnMEpisodes>> response) {
                 App.episodeDao.insertAll(response.body().getResults());

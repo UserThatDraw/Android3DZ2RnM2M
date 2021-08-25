@@ -13,10 +13,11 @@ import java.util.List;
 
 public class EpisodeViewModel extends ViewModel {
 
+    public int episodePage = 1;
     RnMEpisodeRepository repository = new RnMEpisodeRepository();
 
     public MutableLiveData<RnMRespons<RnMEpisodes>> getEpi(){
-        return repository.fetchEpisode();
+        return repository.fetchEpisode(episodePage);
     }
 
     List<RnMEpisodes> getEpisode(){

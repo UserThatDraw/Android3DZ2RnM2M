@@ -12,9 +12,9 @@ import retrofit2.Response;
 
 public class RnMLocationRepository {
 
-    public MutableLiveData<RnMRespons<RnMLocations>> fetchLocation() {
+    public MutableLiveData<RnMRespons<RnMLocations>> fetchLocation(int locationPage) {
         MutableLiveData<RnMRespons<RnMLocations>> data = new MutableLiveData<>();
-        App.locationServies.fetchLocations().enqueue(new Callback<RnMRespons<RnMLocations>>() {
+        App.locationServies.fetchLocations(locationPage).enqueue(new Callback<RnMRespons<RnMLocations>>() {
             @Override
             public void onResponse(Call<RnMRespons<RnMLocations>> call, Response<RnMRespons<RnMLocations>> response) {
                 App.locationDao.insertAll(response.body().getResults());

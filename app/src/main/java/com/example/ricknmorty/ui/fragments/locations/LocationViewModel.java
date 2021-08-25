@@ -13,10 +13,11 @@ import java.util.List;
 
 public class LocationViewModel extends ViewModel {
 
+    public int locationPage = 1;
     RnMLocationRepository repository = new RnMLocationRepository();
 
     public MutableLiveData<RnMRespons<RnMLocations>> getLock(){
-        return repository.fetchLocation();
+        return repository.fetchLocation(locationPage);
     }
 
     List<RnMLocations> getLocation(){

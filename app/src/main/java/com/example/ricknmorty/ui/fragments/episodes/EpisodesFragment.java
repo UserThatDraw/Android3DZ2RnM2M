@@ -5,10 +5,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +33,7 @@ import java.util.List;
 public class EpisodesFragment extends BaseFragment<FragmentEpisodesBinding, EpisodeViewModel> {
 
     EpisodeAdapter adapter = new EpisodeAdapter();
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,9 +51,13 @@ public class EpisodesFragment extends BaseFragment<FragmentEpisodesBinding, Epis
     }
 
     private void setupRecyclerView() {
-        binding.rvEpi.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvEpi.setLayoutManager(linearLayoutManager);
         binding.rvEpi.setAdapter(adapter);
     }
+
+    private int visibleItemCount;
+    private int totalItemCount;
+    private int pastVisibleItem;
 
     @Override
     protected void setupRequests() {
@@ -69,6 +76,23 @@ public class EpisodesFragment extends BaseFragment<FragmentEpisodesBinding, Epis
             List<RnMEpisodes> list = viewModel.getEpisode();
             adapter.setIn(list);
         }
+
+        binding.rvEpi.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0){
+                    visibleItemCount = linearLayoutManager.getChildCount();
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    pastVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+                    if ((visibleItemCount + pastVisibleItem) >= totalItemCount){
+                        viewModel.episodePage++;
+                        viewModel.getEpi().observe(getViewLifecycleOwner(), rnMEpisodesRnMRespons ->
+                                adapter.setIn(rnMEpisodesRnMRespons.getResults()));
+                    }
+                }
+            }
+        });
     }
 
     @Override
