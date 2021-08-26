@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.ricknmorty.base.BaseFragment;
 import com.example.ricknmorty.databinding.FragmentLocationsBinding;
@@ -66,6 +67,7 @@ public class LocationsFragment extends BaseFragment<FragmentLocationsBinding, Lo
                 }
             });
         }else {
+            Toast.makeText(getContext(), "Loaded from cash", Toast.LENGTH_SHORT).show();
             List<RnMLocations> list = viewModel.getLocation();
             adapter.setIn(list);
         }
@@ -79,7 +81,7 @@ public class LocationsFragment extends BaseFragment<FragmentLocationsBinding, Lo
                     totalItemCount = linearLayoutManager.getItemCount();
                     pastVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
                     if ((visibleItemCount + pastVisibleItem) >= totalItemCount){
-                        viewModel.locationPage++;
+                        viewModel.locationPage = 2;
                         viewModel.getLock().observe(getViewLifecycleOwner(), rnMLocationsRnMRespons ->
                                 adapter.setIn(rnMLocationsRnMRespons.getResults()));
                     }

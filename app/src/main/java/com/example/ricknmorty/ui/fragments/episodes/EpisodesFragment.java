@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.ricknmorty.R;
 import com.example.ricknmorty.base.BaseFragment;
@@ -73,6 +74,7 @@ public class EpisodesFragment extends BaseFragment<FragmentEpisodesBinding, Epis
                 }
             });
         }else {
+            Toast.makeText(getContext(), "Loaded from cash", Toast.LENGTH_SHORT).show();
             List<RnMEpisodes> list = viewModel.getEpisode();
             adapter.setIn(list);
         }
