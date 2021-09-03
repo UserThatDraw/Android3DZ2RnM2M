@@ -2,7 +2,6 @@ package com.example.ricknmorty.ui.fragments.characters;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
@@ -18,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.ricknmorty.App;
 import com.example.ricknmorty.interfaces.OnClick;
 import com.example.ricknmorty.base.BaseFragment;
 import com.example.ricknmorty.databinding.FragmentCharactersBinding;
@@ -25,7 +25,6 @@ import com.example.ricknmorty.models.RnMCharacters;
 import com.example.ricknmorty.models.RnMRespons;
 import com.example.ricknmorty.ui.adapters.CharacterAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CharactersFragment extends BaseFragment<FragmentCharactersBinding, CharacterViewModel> {
@@ -76,31 +75,32 @@ public class CharactersFragment extends BaseFragment<FragmentCharactersBinding, 
         ConnectivityManager cm =
                 (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()){
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
             viewModel.getChar().observe(getViewLifecycleOwner(), new Observer<RnMRespons<RnMCharacters>>() {
                 @Override
                 public void onChanged(RnMRespons<RnMCharacters> rnMCharactersRnMRespons) {
-                    adapter.setIn(rnMCharactersRnMRespons.getResults());
+                    App.characterDao.insertAll(rnMCharactersRnMRespons.getResults());
+                    adapter.submitList(rnMCharactersRnMRespons.getResults());
                 }
             });
-        }else {
+        } else {
             Toast.makeText(getContext(), "Loaded from cash", Toast.LENGTH_SHORT).show();
             List<RnMCharacters> list = viewModel.getCharacters();
-            adapter.setIn(list);
+            adapter.submitList(list);
         }
 
         binding.rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0){
+                if (dy > 0) {
                     visibleItemCount = linearLayoutManager.getChildCount();
                     totalItemCount = linearLayoutManager.getItemCount();
                     pastVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
-                    if ((visibleItemCount + pastVisibleItem) >= totalItemCount){
+                    if ((visibleItemCount + pastVisibleItem) >= totalItemCount) {
                         viewModel.charactersPage++;
                         viewModel.getChar().observe(getViewLifecycleOwner(), rnMCharactersRnMRespons ->
-                                adapter.setIn(rnMCharactersRnMRespons.getResults()));
+                                adapter.submitList(rnMCharactersRnMRespons.getResults()));
                     }
                 }
             }

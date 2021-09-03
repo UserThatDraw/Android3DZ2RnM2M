@@ -17,7 +17,7 @@ public class RnMEpisodeRepository {
         App.episodeServies.fetchEpisode(episodePage).enqueue(new Callback<RnMRespons<RnMEpisodes>>() {
             @Override
             public void onResponse(Call<RnMRespons<RnMEpisodes>> call, Response<RnMRespons<RnMEpisodes>> response) {
-                if (response.body().getResults() != null) {
+                if (response.body() != null && response.body().getResults() != null) {
                     App.episodeDao.insertAll(response.body().getResults());
                     data.setValue(response.body());
                 }

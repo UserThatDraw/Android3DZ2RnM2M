@@ -1,53 +1,60 @@
 package com.example.ricknmorty.ui.adapters;
 
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.AsyncDifferConfig;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ricknmorty.databinding.ItemLocationBinding;
+import com.example.ricknmorty.models.RnMCharacters;
 import com.example.ricknmorty.models.RnMLocations;
 
-import org.jetbrains.annotations.NotNull;
+public class LocationAdapter extends ListAdapter<RnMLocations, LocationAdapter.LocationViewHolder> {
 
-import java.util.ArrayList;
-import java.util.List;
+    public LocationAdapter() {
+        super(new LocationDiffUtil());
+    }
 
-public class LocationAdapter extends RecyclerView.Adapter <LocationAdapter.LocationViewHolder> {
-    private List<RnMLocations> list =  new ArrayList<>();
-    private ItemLocationBinding binding;
+    public static class LocationDiffUtil extends DiffUtil.ItemCallback<RnMLocations>{
 
-    public void setIn(List<RnMLocations> lif){
-        list = lif;
-        notifyDataSetChanged();
+        @Override
+        public boolean areItemsTheSame(@NonNull RnMLocations oldItem, @NonNull RnMLocations newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+
+        @SuppressLint("DiffUtilEquals")
+        @Override
+        public boolean areContentsTheSame(@NonNull RnMLocations oldItem, @NonNull RnMLocations newItem) {
+            return oldItem == newItem;
+        }
     }
 
     @NonNull
     @Override
-    public LocationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        binding = ItemLocationBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new LocationViewHolder(binding.getRoot());
+    public LocationAdapter.LocationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new LocationAdapter.LocationViewHolder(
+                ItemLocationBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LocationViewHolder holder, int position) {
-        holder.onBind(list.get(position));
+    public void onBindViewHolder(@NonNull LocationAdapter.LocationViewHolder holder, int position) {
+        holder.onBind(getItem(position));
 
-    }
-
-    @Override
-    public int getItemCount() {
-        return list.size();
     }
 
     public class LocationViewHolder extends RecyclerView.ViewHolder{
 
-        public LocationViewHolder(@NonNull @NotNull View itemView) {
-            super(itemView);
+        private ItemLocationBinding binding;
 
+        public LocationViewHolder(ItemLocationBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
         public void onBind(RnMLocations rnMLocations) {

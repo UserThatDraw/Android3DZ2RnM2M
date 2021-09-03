@@ -5,6 +5,8 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 @Entity
 public class RnMLocations {
 
@@ -53,5 +55,16 @@ public class RnMLocations {
         this.dimension = dimension;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RnMLocations that = (RnMLocations) o;
+        return id == that.id && Objects.equals(name, that.name) && Objects.equals(type, that.type) && Objects.equals(dimension, that.dimension);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, type, dimension);
+    }
 }

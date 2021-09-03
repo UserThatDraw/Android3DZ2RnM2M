@@ -5,4 +5,10 @@
     <string name="characters">Characters</string>
     <string name="locations">Locations</string>
     <string name="episodes">Episodes</string>
+    <string name="main_theme">Main theme</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="russian">Russian</string>
+    <string name="english">English</string>
+    <string name="language">Language</string>
 </resources>

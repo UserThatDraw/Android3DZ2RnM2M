@@ -5,6 +5,8 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 @Entity
 public class RnMEpisodes {
 
@@ -53,4 +55,16 @@ public class RnMEpisodes {
         this.episode = episode;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RnMEpisodes that = (RnMEpisodes) o;
+        return id == that.id && Objects.equals(name, that.name) && Objects.equals(date, that.date) && Objects.equals(episode, that.episode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, date, episode);
+    }
 }

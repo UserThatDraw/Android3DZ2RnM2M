@@ -37,7 +37,6 @@ public class LocationsFragment extends BaseFragment<FragmentLocationsBinding, Lo
         return binding.getRoot();
     }
 
-
     @Override
     protected void setupViews() {
         super.setupViews();
@@ -63,13 +62,13 @@ public class LocationsFragment extends BaseFragment<FragmentLocationsBinding, Lo
             viewModel.getLock().observe(getViewLifecycleOwner(), new Observer<RnMRespons<RnMLocations>>() {
                 @Override
                 public void onChanged(RnMRespons<RnMLocations> rnMLocationsRnMRespons) {
-                    adapter.setIn(rnMLocationsRnMRespons.getResults());
+                    adapter.submitList(rnMLocationsRnMRespons.getResults());
                 }
             });
         }else {
             Toast.makeText(getContext(), "Loaded from cash", Toast.LENGTH_SHORT).show();
             List<RnMLocations> list = viewModel.getLocation();
-            adapter.setIn(list);
+            adapter.submitList(list);
         }
 
         binding.rvLock.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -83,7 +82,7 @@ public class LocationsFragment extends BaseFragment<FragmentLocationsBinding, Lo
                     if ((visibleItemCount + pastVisibleItem) >= totalItemCount){
                         viewModel.locationPage = 2;
                         viewModel.getLock().observe(getViewLifecycleOwner(), rnMLocationsRnMRespons ->
-                                adapter.setIn(rnMLocationsRnMRespons.getResults()));
+                                adapter.submitList(rnMLocationsRnMRespons.getResults()));
                     }
                 }
             }

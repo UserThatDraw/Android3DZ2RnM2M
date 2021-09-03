@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.ricknmorty.App;
 import com.example.ricknmorty.R;
 import com.example.ricknmorty.base.BaseFragment;
 import com.example.ricknmorty.databinding.FragmentCharactersBinding;
@@ -43,8 +44,6 @@ public class EpisodesFragment extends BaseFragment<FragmentEpisodesBinding, Epis
         return binding.getRoot();
     }
 
-
-
     @Override
     protected void setupViews() {
         super.setupViews();
@@ -70,13 +69,14 @@ public class EpisodesFragment extends BaseFragment<FragmentEpisodesBinding, Epis
             viewModel.getEpi().observe(getViewLifecycleOwner(), new Observer<RnMRespons<RnMEpisodes>>() {
                 @Override
                 public void onChanged(RnMRespons<RnMEpisodes> rnMEpisodesRnMRespons) {
-                    adapter.setIn(rnMEpisodesRnMRespons.getResults());
+                    App.episodeDao.insertAll(rnMEpisodesRnMRespons.getResults());
+                    adapter.submitList(rnMEpisodesRnMRespons.getResults());
                 }
             });
         }else {
             Toast.makeText(getContext(), "Loaded from cash", Toast.LENGTH_SHORT).show();
             List<RnMEpisodes> list = viewModel.getEpisode();
-            adapter.setIn(list);
+            adapter.submitList(list);
         }
 
         binding.rvEpi.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -90,7 +90,7 @@ public class EpisodesFragment extends BaseFragment<FragmentEpisodesBinding, Epis
                     if ((visibleItemCount + pastVisibleItem) >= totalItemCount){
                         viewModel.episodePage++;
                         viewModel.getEpi().observe(getViewLifecycleOwner(), rnMEpisodesRnMRespons ->
-                                adapter.setIn(rnMEpisodesRnMRespons.getResults()));
+                                adapter.submitList(rnMEpisodesRnMRespons.getResults()));
                     }
                 }
             }

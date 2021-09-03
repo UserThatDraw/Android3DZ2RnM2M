@@ -17,7 +17,7 @@ public class RnMLocationRepository {
         App.locationServies.fetchLocations(locationPage).enqueue(new Callback<RnMRespons<RnMLocations>>() {
             @Override
             public void onResponse(Call<RnMRespons<RnMLocations>> call, Response<RnMRespons<RnMLocations>> response) {
-                if (response.body().getResults() != null) {
+                if (response.body() != null && response.body().getResults() != null) {
                     App.locationDao.insertAll(response.body().getResults());
                     data.setValue(response.body());
                 }

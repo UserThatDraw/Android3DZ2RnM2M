@@ -17,7 +17,7 @@ public class RnMCharacterRepository {
         App.characterServies.fetchCharacters(page).enqueue(new Callback<RnMRespons<RnMCharacters>>() {
             @Override
             public void onResponse(Call<RnMRespons<RnMCharacters>> call, Response<RnMRespons<RnMCharacters>> response) {
-                if (response.body().getResults() != null) {
+                if (response.body() != null || response.body().getResults() != null) {
                     App.characterDao.insertAll(response.body().getResults());
                     data.setValue(response.body());
                 }
