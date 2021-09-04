@@ -94,6 +94,7 @@ public class CharactersFragment extends BaseFragment<FragmentCharactersBinding, 
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
+                    linearLayoutManager.getChildCount();
                     visibleItemCount = linearLayoutManager.getChildCount();
                     totalItemCount = linearLayoutManager.getItemCount();
                     pastVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
