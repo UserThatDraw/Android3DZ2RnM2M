@@ -30,7 +30,7 @@ import java.util.List;
 public class CharactersFragment extends BaseFragment<FragmentCharactersBinding, CharacterViewModel> {
 
     CharacterAdapter adapter = new CharacterAdapter();
-    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+    LinearLayoutManager linearLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +46,7 @@ public class CharactersFragment extends BaseFragment<FragmentCharactersBinding, 
     }
 
     private void setupRecyclerView() {
-        binding.rv.setLayoutManager(linearLayoutManager);
+        binding.rv.setLayoutManager(linearLayoutManager = new LinearLayoutManager(getContext()));
         binding.rv.setAdapter(adapter);
     }
 
